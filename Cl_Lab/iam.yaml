@@ -1,0 +1,18 @@
+Parameters:
+  Password: 
+    NoEcho: true
+    Type: String
+    Description: New Account Password
+    MinLength: 1
+    MaxLength: 41
+    ConstraintDescription: the password must be between 1 and 41 characters
+  UserName:
+    Type: String
+    Description: New Account Username
+Resources:
+  User1:
+    Type: AWS::IAM::User
+    Properties: 
+      LoginProfile: !Ref Password
+      UserName: !Ref UserName
+      ManagedPolicyArns: arn:aws:iam::aws:policy/AdministratorAccess

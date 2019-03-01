@@ -1,0 +1,58 @@
+Parameters:
+  Owner: 
+    Type: String
+    Description: Name of the owner for the stack
+  az:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Description: Availability Zone to deploy the subnets 
+Resources:
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties: 
+      CidrBlock: 10.0.1.0/24
+      VpcId: 
+        Ref: PrimaryVPC
+      AvailabilityZone: !Ref az
+      Tags: 
+      - Key: Owner
+        Value: !Ref Owner
+    PublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId:
+          Ref: PrimaryVPC
+        Tags:
+        - Key: Owner
+          Value: !Ref Owner
+    PublicSubnetRouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties: 
+        RouteTableId: !Ref PublicRouteTable
+        SubnetId: !Ref PublicSubnet
+    PrivateSubnet:
+      Type: AWS::EC2::Subnet
+      Properties: 
+        CidrBlock: 10.0.2.0/24
+        VpcId: 
+          Ref: PrimaryVPC
+        AvailabilityZone: !Ref az
+        Tags: 
+        - Key: Owner
+          Value: !Ref Owner
+    PrivateRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId:
+          Ref: PrimaryVPC
+        Tags:
+        - Key: Owner
+          Value: !Ref Owner
+    PrivateubnetRouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties: 
+        RouteTableId: !Ref PrivateRouteTable
+        SubnetId: !Ref PrivateSubnet
+Outputs:
+  VPC_ID:
+    Description: VPC ID
+    Value: !Ref PrimaryVPC

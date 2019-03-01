@@ -1,0 +1,19 @@
+Parameters:
+  Owner: 
+    Type: String
+    Description: Name of the owner for the stack
+Resources:
+  PrimaryVPC:
+    Type: AWS::EC2::VPC
+    Properties: 
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: False
+      EnableDnsHostnames: False
+      InstanceTenancy: default
+      Tags: 
+      - Key: Owner
+        Value: !Ref Owner
+Outputs:
+  VPC_ID:
+    Description: VPC ID
+    Value: !Ref PrimaryVPC
