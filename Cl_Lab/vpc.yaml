@@ -14,6 +14,6 @@ Resources:
       - Key: Owner
         Value: !Ref Owner
 Outputs:
-  VPC_ID:
+  vpcID:
     Description: VPC ID
     Value: !Ref PrimaryVPC
